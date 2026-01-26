@@ -29,8 +29,7 @@ export default async function CenterDetailsPage({ params }: PageProps) {
         <div className="container mx-auto px-4 py-8 max-w-5xl">
             <Link href="/">
                 <Button variant="ghost" className="mb-6 pl-0 hover:bg-transparent hover:text-indigo-600">
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to Centers
+                    <ArrowLeft className="mr-2 h-4 w-4" /> পূর্ববর্তী পৃষ্ঠা
                 </Button>
             </Link>
 
@@ -40,33 +39,27 @@ export default async function CenterDetailsPage({ params }: PageProps) {
                     <Card className="border-indigo-100 shadow-md">
                         <CardContent className="p-6 space-y-6">
                             <div>
-
                                 <h1 className="text-2xl font-bold text-slate-900">{center.name}</h1>
-
+                                <span className="text-sm font-medium">{center.area}</span>
                             </div>
 
                             <div className="space-y-4">
-                                <div className="flex items-start gap-3 text-slate-600">
-                                    <MapPin className="h-5 w-5 text-indigo-500 shrink-0 mt-0.5" />
-                                    <span className="text-sm font-medium">{center.area}</span>
-                                </div>
-
                                 {center.district && (
-                                    <div className="flex flex-col gap-1 p-3 bg-slate-50 rounded-md text-sm">
+                                    <div className="flex flex-col gap-1 p-3 bg-slate-50 rounded-md">
+                                        {center.seat_number && (
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-500">আসন নম্বর:</span>
+                                                <span className="font-bold text-slate-900">{center.seat_number}</span>
+                                            </div>
+                                        )}
                                         <div className="flex justify-between">
-                                            <span className="text-slate-500">District:</span>
+                                            <span className="text-slate-500">জেলা:</span>
                                             <span className="font-medium text-slate-900">{center.district}</span>
                                         </div>
                                         {center.division && (
                                             <div className="flex justify-between">
-                                                <span className="text-slate-500">Division:</span>
+                                                <span className="text-slate-500">বিভাগ:</span>
                                                 <span className="font-medium text-slate-900">{center.division}</span>
-                                            </div>
-                                        )}
-                                        {center.seat_number && (
-                                            <div className="flex justify-between">
-                                                <span className="text-slate-500">Seat No:</span>
-                                                <span className="font-medium text-slate-900">{center.seat_number}</span>
                                             </div>
                                         )}
                                     </div>
@@ -75,27 +68,26 @@ export default async function CenterDetailsPage({ params }: PageProps) {
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-3 text-slate-600">
                                         <Users className="h-5 w-5 text-indigo-500 shrink-0" />
-                                        <span className="text-sm font-medium">Voter Statistics</span>
+                                        <span className="text-sm font-medium">ভোটার</span>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-2 text-xs">
-                                        <div className="bg-slate-50 p-2 rounded">
-                                            <span className="block text-slate-500">Total</span>
+                                    <div className="flex flex-col gap-2 text-xl">
+                                        <div className="flex items-center justify-between bg-slate-50 p-2 rounded">
+                                            <span className="block text-slate-500">মোট ভোটার</span>
                                             <span className="font-semibold text-slate-900">{center.total_voter?.toLocaleString() || '-'}</span>
                                         </div>
 
-                                        <div className="bg-slate-50 p-2 rounded">
-                                            <span className="block text-slate-500">Male</span>
-                                            <span className="font-semibold text-blue-600">{center.male_voter?.toLocaleString() || '-'}</span>
+                                        <div className="flex items-center justify-between bg-slate-50 p-2 rounded">
+                                            <span className="block text-slate-500">পুরুষ ভোটার</span>
+                                            <span className="font-semibold text-slate-900">{center.male_voter?.toLocaleString() || '-'}</span>
                                         </div>
-                                        <div className="bg-slate-50 p-2 rounded">
-                                            <span className="block text-slate-500">Female</span>
-                                            <span className="font-semibold text-pink-600">{center.female_voter?.toLocaleString() || '-'}</span>
+
+                                        <div className="flex items-center justify-between bg-slate-50 p-2 rounded">
+                                            <span className="block text-slate-500">নারী ভোটার</span>
+                                            <span className="font-semibold text-slate-900">{center.female_voter?.toLocaleString() || '-'}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </CardContent>
                     </Card>
                 </div>
@@ -103,8 +95,7 @@ export default async function CenterDetailsPage({ params }: PageProps) {
                 {/* Right Column: Candidates */}
                 <div className="md:col-span-2">
                     <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-slate-900">Candidates</h2>
-                        <p className="text-slate-500">Candidates running for office in this district.</p>
+                        <h2 className="text-2xl font-bold text-slate-900">প্রার্থী</h2>
                     </div>
 
                     {candidates.length > 0 ? (
@@ -113,29 +104,27 @@ export default async function CenterDetailsPage({ params }: PageProps) {
                                 const sign = signs.find(s => s.id === candidate.signId)
                                 return (
                                     <Card key={candidate.id} className="overflow-hidden hover:shadow-md transition-shadow">
-                                        <div className="flex items-center p-4 gap-4">
+                                        <div className="flex flex-col items-center gap-2">
                                             <img
                                                 src={candidate.photoUrl || "https://ui-avatars.com/api/?name=" + candidate.name}
                                                 alt={candidate.name}
-                                                className="h-16 w-16 rounded-full object-cover border-2 border-slate-100 shrink-0 bg-slate-200"
+                                                className="h-36 w-36 rounded-full object-cover border-2 border-slate-100 shrink-0 bg-slate-200"
                                             />
-                                            <div className="flex-1">
-                                                <h3 className="font-bold text-slate-900">{candidate.name}</h3>
-                                                <p className="text-xs text-slate-500 mt-1">{candidate.party}</p>
-                                            </div>
-                                            {sign && (
-                                                <div className="shrink-0 flex flex-col items-center">
-                                                    <div className="h-12 w-12 relative items-center justify-center flex">
-                                                        <img
-                                                            src={sign.imageUrl}
-                                                            alt={sign.name}
-                                                            title={sign.name}
-                                                            className="max-h-full max-w-full object-contain"
-                                                        />
-                                                    </div>
-                                                    <span className="text-[10px] text-slate-500 truncate max-w-[60px]">{sign.name}</span>
-                                                </div>
-                                            )}
+                                            <>
+                                                <h3 className="text-2xl font-bold text-slate-900">{candidate.name}</h3>
+                                                <p className="text-slate-500 text-xl">{candidate.party}</p>
+                                                {sign && (
+                                                    // <div className="h-12 w-12 relative items-center justify-center flex">
+                                                    //     <img
+                                                    //             src={sign.imageUrl}
+                                                    //             alt={sign.name}
+                                                    //             title={sign.name}
+                                                    //             className="max-h-full max-w-full object-contain"
+                                                    //         />
+                                                    // </div>
+                                                    <span className="text-slate-500">মার্কা: {sign.name} </span>
+                                                )}
+                                            </>
                                         </div>
                                     </Card>
                                 )
@@ -149,6 +138,6 @@ export default async function CenterDetailsPage({ params }: PageProps) {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

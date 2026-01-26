@@ -13,7 +13,7 @@ export default function PublicLayout({
             </main>
             <footer className="border-t bg-white py-6">
                 <div className="container mx-auto px-4 text-center text-sm text-slate-500">
-                    © 2024 Election Information Portal. All rights reserved.
+                    স্বত্ব © ২০২৬ News24bd.tv
                 </div>
             </footer>
         </div>
