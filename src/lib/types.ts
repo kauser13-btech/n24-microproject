@@ -3,7 +3,7 @@ export interface ElectionCenter {
   name: string;
   id_bn: string;
   area: string;
-  seat_number?: string;
+  seat_number?: string | number;
   district?: string;
   division?: string;
   total_voter?: number;

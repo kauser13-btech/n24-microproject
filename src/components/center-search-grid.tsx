@@ -39,9 +39,9 @@ export function CenterSearchGrid({ initialCenters }: CenterSearchGridProps) {
     )) as string[]
 
     const filteredCenters = initialCenters.filter(center => {
-        const matchesSearch = center.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            center.area.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (center.seat_number && center.seat_number.toLowerCase().includes(searchTerm.toLowerCase()))
+        const matchesSearch = String(center.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+            String(center.area || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (center.seat_number && String(center.seat_number).toLowerCase().includes(searchTerm.toLowerCase()))
 
         const matchesDivision = selectedDivision === "all" || center.division === selectedDivision
         const matchesDistrict = selectedDistrict === "all" || center.district === selectedDistrict
