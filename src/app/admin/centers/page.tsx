@@ -71,7 +71,7 @@ export default async function CentersPage() {
                                                 </Link>
                                                 <form action={async () => {
                                                     "use server"
-                                                    await deleteCenterAction(center.id)
+                                                    await deleteCenterAction(String(center.id))
                                                 }}>
                                                     <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50">
                                                         <Trash2 className="h-4 w-4" />

@@ -11,12 +11,12 @@ interface PageProps {
 
 export default async function EditCenterPage({ params }: PageProps) {
     const { id } = await params
-    const center = await getCenterById(id)
+    const center = await getCenterById(Number(id))
 
     if (!center) notFound()
 
     // Bind the ID to the action
-    const updateAction = updateCenterAction.bind(null, center.id)
+    const updateAction = updateCenterAction.bind(null, String(center.id))
 
     return (
         <div className="py-8">

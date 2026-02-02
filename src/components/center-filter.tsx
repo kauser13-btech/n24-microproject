@@ -24,7 +24,7 @@ export function CenterFilter({ centers, currentCenterId }: CenterFilterProps) {
         )
     }, [centers, search])
 
-    const selectedCenter = centers.find(c => c.id === currentCenterId)
+    const selectedCenter = centers.find(c => String(c.id) === currentCenterId)
 
     const handleSelect = (centerId: string) => {
         setOpen(false)
@@ -68,15 +68,15 @@ export function CenterFilter({ centers, currentCenterId }: CenterFilterProps) {
                                     filteredCenters.map((center) => (
                                         <div
                                             key={center.id}
-                                            className={`flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-slate-100 ${center.id === currentCenterId ? "bg-slate-50 font-medium" : ""
+                                            className={`flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-slate-100 ${String(center.id) === currentCenterId ? "bg-slate-50 font-medium" : ""
                                                 }`}
-                                            onClick={() => handleSelect(center.id as string)}
+                                            onClick={() => handleSelect(String(center.id))}
                                         >
                                             <div className="flex flex-col">
                                                 <span>{center.name}</span>
                                                 <span className="text-xs text-slate-400">{center.area}</span>
                                             </div>
-                                            {center.id === currentCenterId && (
+                                            {String(center.id) === currentCenterId && (
                                                 <Check className="h-4 w-4 text-indigo-600" />
                                             )}
                                         </div>

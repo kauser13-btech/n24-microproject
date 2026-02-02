@@ -22,7 +22,7 @@ export default async function CandidatesPage(props: CandidatesPageProps) {
     const currentPage = Number(searchParams.page) || 1
 
     const allCandidates = centerId
-        ? await getCandidatesByCenter(centerId)
+        ? await getCandidatesByCenter(Number(centerId))
         : await getCandidates()
 
     const totalItems = allCandidates.length
