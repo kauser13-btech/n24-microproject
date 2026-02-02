@@ -14,21 +14,29 @@ interface CenterFormProps {
     description: string
 }
 export function CenterForm({ initialData, action, title, description }: CenterFormProps) {
-    // Get unique divisions
-    const divisions = useMemo(() => {
-        const uniqueDivisions = new Set(districtsData.map(d => d.division_id))
-        return Array.from(uniqueDivisions).sort()
-    }, [])
-
     const [selectedDivision, setSelectedDivision] = useState(initialData?.division || "")
     const [selectedDistrict, setSelectedDistrict] = useState(initialData?.district || "")
+
+    // Map Bangla division names to IDs in districts.json
+    const divisionMap: Record<string, number> = {
+        "বরিশাল": 1,
+        "চট্টগ্রাম": 2,
+        "ঢাকা": 3,
+        "খুলনা": 4,
+        "ময়মনসিংহ": 5,
+        "রাজশাহী": 6,
+        "রংপুর": 7,
+        "সিলেট": 8
+    }
+    const divisions = Object.keys(divisionMap)
 
     // Filter districts based on selected division
     const availableDistricts = useMemo(() => {
         if (!selectedDivision) return []
+        const divisionId = divisionMap[selectedDivision]
         return districtsData
-            .filter(d => d.division_id === selectedDivision)
-            .sort((a, b) => a.name.localeCompare(b.name))
+            .filter((d: any) => d.division_id === divisionId)
+            .sort((a: any, b: any) => a.name.localeCompare(b.name))
     }, [selectedDivision])
 
     const handleDivisionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,11 +54,19 @@ export function CenterForm({ initialData, action, title, description }: CenterFo
             <form action={action}>
                 <CardContent className="space-y-4">
                     {/* ... existing fields ... */}
-                    <div className="space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                            Center Name
-                        </label>
-                        <Input id="name" name="name" defaultValue={initialData?.name} required placeholder="e.g. Downtown Community Hall" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                Center Name
+                            </label>
+                            <Input id="name" name="name" defaultValue={initialData?.name} required placeholder="e.g. Downtown Community Hall" />
+                        </div>
+                        <div className="space-y-2">
+                            <label htmlFor="id_bn" className="text-sm font-medium leading-none">
+                                Center ID (Bangla)
+                            </label>
+                            <Input id="id_bn" name="id_bn" defaultValue={initialData?.id_bn} required placeholder="e.g. ১০১" />
+                        </div>
                     </div>
 
                     <div className="space-y-2">
@@ -103,7 +119,7 @@ export function CenterForm({ initialData, action, title, description }: CenterFo
                                 >
                                     <option value="">Select District</option>
                                     {availableDistricts.map(dist => (
-                                        <option key={dist.name} value={dist.name}>{dist.name}</option>
+                                        <option key={dist.bn_name} value={dist.bn_name}>{dist.bn_name}</option>
                                     ))}
                                 </select>
                             </div>
@@ -128,6 +144,12 @@ export function CenterForm({ initialData, action, title, description }: CenterFo
                                 Female Voters
                             </label>
                             <Input id="female_voter" name="female_voter" type="number" defaultValue={initialData?.female_voter} placeholder="0" />
+                        </div>
+                        <div className="space-y-2">
+                            <label htmlFor="transgender_voter" className="text-sm font-medium leading-none">
+                                Transgender Voters
+                            </label>
+                            <Input id="transgender_voter" name="transgender_voter" type="number" defaultValue={initialData?.transgender_voter} placeholder="0" />
                         </div>
                     </div>
 

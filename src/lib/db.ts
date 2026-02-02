@@ -30,14 +30,16 @@ export async function getCenters(): Promise<ElectionCenter[]> {
     return readJson<ElectionCenter>(CENTERS_FILE);
 }
 
-export async function getCenterById(id: string): Promise<ElectionCenter | undefined> {
+export async function getCenterById(id: number): Promise<ElectionCenter | undefined> {
     const centers = await getCenters();
     return centers.find((c) => String(c.id) === String(id));
 }
 
 export async function createCenter(center: Omit<ElectionCenter, 'id'>): Promise<ElectionCenter> {
     const centers = await getCenters();
-    const newCenter = { ...center, id: crypto.randomUUID() };
+    // Generate simplified numeric ID (max + 1)
+    const maxId = centers.reduce((max, c) => Math.max(max, Number(c.id) || 0), 0);
+    const newCenter = { ...center, id: maxId + 1 };
     centers.push(newCenter);
     await writeJson(CENTERS_FILE, centers);
     return newCenter;
@@ -70,10 +72,16 @@ export async function getCandidates(): Promise<Candidate[]> {
     return readJson<Candidate>(CANDIDATES_FILE);
 }
 
-export async function getCandidatesByCenter(centerId: string): Promise<Candidate[]> {
+export async function getCandidatesByCenter(centerId: number): Promise<Candidate[]> {
     const candidates = await getCandidates();
     return candidates.filter((c) => String(c.assignedCenterId) === String(centerId));
 }
+
+export async function getCandidateById(id: string): Promise<Candidate | undefined> {
+    const candidates = await getCandidates();
+    return candidates.find((c) => String(c.id) === String(id));
+}
+
 
 export async function createCandidate(candidate: Omit<Candidate, 'id'>): Promise<Candidate> {
     const candidates = await getCandidates();

@@ -1,6 +1,7 @@
 export interface ElectionCenter {
-  id: string;
+  id: number;
   name: string;
+  id_bn: string;
   area: string;
   seat_number?: string;
   district?: string;
@@ -8,6 +9,7 @@ export interface ElectionCenter {
   total_voter?: number;
   male_voter?: number;
   female_voter?: number;
+  transgender_voter?: number;
 }
 
 export interface Candidate {

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Election 26 | News24.tv",
+  title: "Election 26 | News24bd.tv",
   description: "Find your polling station and candidate information.",
 };
 

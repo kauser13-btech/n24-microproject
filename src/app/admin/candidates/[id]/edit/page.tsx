@@ -1,4 +1,4 @@
-import { getCandidates, getCenters, getSigns } from "@/lib/db"
+import { getCandidates, getCenters, getSigns, getCandidateById } from "@/lib/db"
 import { updateCandidateAction } from "@/lib/actions"
 import { CandidateForm } from "@/components/candidate-form"
 import { notFound } from "next/navigation"
@@ -11,8 +11,7 @@ interface PageProps {
 
 export default async function EditCandidatePage({ params }: PageProps) {
     const { id } = await params
-    const candidates = await getCandidates()
-    const candidate = candidates.find(c => c.id === id)
+    const candidate = await getCandidateById(id)
     const centers = await getCenters()
     const signs = await getSigns()
 
