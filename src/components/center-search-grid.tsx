@@ -195,8 +195,8 @@ export function CenterSearchGrid({ initialCenters }: CenterSearchGridProps) {
                                 </div>
 
                                 {center.seat_number && (
-                                    <Badge className="bg-indigo-50 text-indigo-700 border-indigo-100 text-sm font-semibold px-2.5 py-0.5 shadow-sm">
-                                        {center.seat_number}
+                                    <Badge className="bg-indigo-50 min-w-24 text-center text-indigo-700 border-indigo-100 text-sm font-semibold px-2.5 py-0.5 shadow-sm">
+                                        {"আসন: " + center.id_bn}
                                     </Badge>
                                 )}
                             </CardHeader>
